@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 //For Logger Middleware for Logging HTTP requests and errors
@@ -24,6 +25,11 @@ if(process.env.NODE_ENV === 'development') {
 //setting the allowed extension name
 app.engine('.hbs', exphbs({defaultLayout: 'main',extname: '.hbs'}));
 app.set('view engine', '.hbs');
+
+
+//Static Folder for Public Assets
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 //Routes
 app.use('/', require('./routes/index'))
