@@ -1,5 +1,5 @@
 //database setup
-
+//For MongoDB validation, casting and business logic
 const mongoose = require ('mongoose');
 
 const connectDB = async () => {
