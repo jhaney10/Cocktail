@@ -1,1 +1,28 @@
 <h1>Dashboard</h1>
+{{#if cocktails}}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {{#each cocktails}}
+            <div class="col s3 m3">
+                <div class="card small">
+                    <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator responsive-img" src="/images/{{drinkThumbId}}">
+                    </div>
+                    <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">{{drinkName}}<i class="material-icons right fa fa-chevron-circle-down"></i></span>
+                    <p><a href="/cocktails/{{_id}}">View</a></p>
+                    </div>
+                    <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">{{drinkName}}<i class="material-icons right fa fa-times"></i></span>
+                    <p>{{instructions}}</p>
+                    </div>
+                </div>
+            </div>
+            
+        {{/each}}
+      </div>
+    
+{{else}}
+<p>You have not created any cocktail recipe</p>
+{{/if}}
+
+{{!-- {{formatDate createdAt 'MMMM DOo YYYY'}} --}}
