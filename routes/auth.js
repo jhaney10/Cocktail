@@ -16,8 +16,14 @@ router.get('/google',
 router.get('/google/callback', 
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) =>  {
-    // Successful authentication, redirect home.
-    res.redirect('/explore');
+      try {
+        // Successful authentication, redirect home.
+        res.redirect('/explore');
+      } catch (error) {
+        console.error(error)
+        res.render('error/500')
+      }
+    
   });
 
 //@desc Logout user

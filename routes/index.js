@@ -39,11 +39,22 @@ router.get('/dashboard',ensureAuth, async (req, res) => {
 //@desc Explore Cocktails
 //@route GET /explore
 
-router.get('/explore',ensureAuth, (req, res) => {
-    //res.send('Dashboard')
-    res.render('explore', {
-        name: req.user.firstName
-    });
+router.get('/explore',ensureAuth, async (req, res) => {
+    try {
+        const cocktails = await Cocktail.find({status: 'public'})
+        .populate('user') //includes user details
+        .sort({createdAt: 'desc'})
+        .lean() //This retrieves plain javascript objects for use in a template
+        console.log(cocktails);
+        res.render('explore', {
+            name: req.user.firstName,
+            cocktails
+        });
+    } catch (error) {
+        console.error(error)
+        res.render('error/500')
+    }
+    
 })
 //@desc Retrieve Image from S3
 //@route GET /images/key

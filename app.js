@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
+const methodOverride = require('method-override'); 
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo'); //for storing session
@@ -37,18 +38,29 @@ if(process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
+//Method override to allow put and delete methods from form
+app.use(methodOverride(function(req, res){
+    if(req.body && typeof req.body === 'object' && '_method' in req.body){
+
+        let method = req.body._method
+        delete req.body._method
+        return method
+    }
+}))
 
 //Handlebars helpers
 
-const {formatDate} = require('./helpers/hbs')
+const {formatDate, select} = require('./helpers/hbs')
 //Handlebars 
 //setting the allowed extension name
 app.engine('.hbs', exphbs({
     helpers: {
         formatDate,
+        select
     },
      defaultLayout: 'main',extname: '.hbs'}));
 app.set('view engine', '.hbs');
+
 
 
 //Session Middleware should be above passport middleware
@@ -63,7 +75,12 @@ app.use(session({
 //Add passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());  //requires express-session
-
+ 
+//Set global variable
+app.use(function (req, res, next) {
+    res.locals.user = req.user || null //access global user
+    next()
+})
 //Static Folder for Public Assets
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -1,0 +1,59 @@
+<h3>Edit Cocktail</h3>
+<div class="row">
+  <form action="/cocktails/{{cocktail._id}}" method="POST" class="col s12" >
+  <input type="hidden" name="_method" value="PUT">
+    <div class="row">
+      <div class="input-field col s12 ">
+        <textarea id="drinkName" class="materialize-textarea" name="drinkName">{{cocktail.drinkName}}</textarea>
+        <label for="drinkName">Cocktail Name</label>
+      </div>
+    </div>
+    <div class="row"> 
+      <div class="input-field col s12">
+      <select name="status" id="status">
+          {{#select cocktail.status}}
+            <option value="public" selected>Public</option>
+            <option value="private">Private</option>
+          {{/select}}
+        
+      </select>
+      <label for="status">Status</label>
+    </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea id="instructions" class="materialize-textarea" name="instructions">{{cocktail.instructions}}</textarea>
+        <label for="instructions">Instructions</label>
+      </div>
+    </div>
+    {{!-- {{#each cocktail.content}}
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="ingredient1" type="text" class="" name="content[0][ingredient]" value="{{ingredient}}">
+        <label for="ingredient1">Ingredient 1</label>
+      </div>
+      <div class="input-field col s6">
+        <input id="measurement1" type="text" class="" name="content[0][measurement]" value="{{measurement}}">
+        <label for="measurement1">Measurement 1</label>
+      </div>
+    </div>
+    {{/each}} --}}
+    <div class="row">
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>Upload Cocktail Image</span>
+          <input type="file" name="drinkThumbId">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <input type="submit" value="Save" class="btn">
+      <a href="/dashboard" class="btn orange">Cancel</a>
+    </div>
+  </form>
+</div>
+

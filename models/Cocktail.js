@@ -38,6 +38,9 @@ const CocktailSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    modifiedAt: {
+        type: Date
     }
 })
 
